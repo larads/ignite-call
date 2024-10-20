@@ -1,8 +1,11 @@
 import type { AppProps } from 'next/app'
 import { SessionProvider } from 'next-auth/react'
+import { QueryClientProvider } from '@tanstack/react-query'
 
 import '@/lib/dayjs'
 import { globalStyles } from "@/styles/global"
+import { queryClient } from '@/lib/react-query'
+
 
   globalStyles()
 
@@ -10,9 +13,11 @@ import { globalStyles } from "@/styles/global"
     Component,
     pageProps: { session, ...pageProps },
   }: AppProps) {
-    return (
+  return (
+    <QueryClientProvider client={queryClient}>
       <SessionProvider session={session}>
         <Component {...pageProps} />
       </SessionProvider>
-    )
+    </QueryClientProvider>
+  )
 }
